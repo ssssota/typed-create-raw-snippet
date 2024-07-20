@@ -5,26 +5,20 @@ type Getters<T> = {
   [K in keyof T]: () => T[K];
 };
 export interface CreateRawSnippet {
-  <Params extends unknown[]>(
-    fn: (...params: Getters<Params>) => {
-      render: () => string;
-      setup?: (element: Element) => void;
-    }
-  ): Snippet<Params>;
-
-  <Params extends unknown[], El extends keyof HTMLElementTagNameMap>(
-    fn: (...params: Getters<Params>) => {
-      render: () => `${string}</${El}>`;
-      setup?: (element: HTMLElementTagNameMap[El]) => void;
-    }
-  ): Snippet<Params>;
-
   <Params extends unknown[], RenderResult extends string>(
     fn: (...params: Getters<Params>) => {
       render: () => RenderResult;
       setup?: (
         element: HTMLElementTagNameMap[RootElement<RenderResult>]
       ) => void;
+    }
+  ): Snippet<Params>;
+
+  // Original signature
+  <Params extends unknown[]>(
+    fn: (...params: Getters<Params>) => {
+      render: () => string;
+      setup?: (element: Element) => void;
     }
   ): Snippet<Params>;
 }
